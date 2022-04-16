@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+   <form >
+       <h1>Apply promo code</h1>
+  <input type="text" placeholder="apply promo code" value="" id="promo">
+  <input type="submit" value="Submit">
+  </form>
+  <p></p>
+   <h1>MY CART</h1>
+   <div id="container2">
+    
+   </div>
+    <button>
+        <a href="CheckoutPage.html">Checkout</a>
+    </button>
+     <script>
+      
+      var cartdata=JSON.parse(localStorage.getItem("cartdata"))
+      var totalsum=cartdata.reduce(function(sum,ele,index,arr){
+         return sum+Number(ele.price)
+      },0);
+      var totalitem = cartdata.length;
+       document.querySelector('p').innerText="you have"+" "+totalitem+" "+"in your cart and total price is" + " " +totalsum
+      cartdata.forEach(function(cartItem,cartindex){
+      
+      var box=document.createElement("div");
+      box.setAttribute("class","box")  
+      var name=document.createElement("p");    
+      name.textContent=cartItem.name;
+      var img=document.createElement("img");   
+      img.src=cartItem.image_url
+      var rating=document.createElement("p");   
+      rating.innerText=cartItem.rating;
+      var price=document.createElement("p");   
+      price.innerText=cartItem.price;
+      var cartbutton=document.createElement("button");
+      cartbutton.innerText="remove from cart";
+     
+
+      cartbutton.addEventListener("click",function(){
+        cartdata.splice(cartindex,1);
+        localStorage.setItem("cartdata",JSON.stringify(cartdata));
+        window.location.reload();s
+      })
+      box.append(name,img,rating,price,cartbutton);
+      document.querySelector("#container2").append(box);
+
+    }) 
+       var discount;
+    
+    document.querySelector('form').addEventListener('submit',function()
+    
+    {
+        event.preventDefault();
+        var data=document.querySelector('#prome').value;
+        if(data==30){
+            alert("coupon applied succesfully")
+        }else{
+            alert("wrong promo code")
+        }
+    })
+
+
+  </script>
+</body>
+</html>
